@@ -23,6 +23,12 @@ const serviceSchema = mongoose.Schema({
 	offer: {
 		type: String
 	},
+	features: {
+		type: Array
+	},
+	benefits: {
+		type: Array
+	}
 }, { timestamps: true });
 
 exports.serviceSchema = serviceSchema;
