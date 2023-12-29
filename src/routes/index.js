@@ -7,13 +7,6 @@ module.exports = (app) => {
       api_version: "V1.0.0",
     });
   });
-  app.get("/hello", (req, res) => {
-    res.json({
-      message: "These are Korppi APIs",
-      api_health: "good",
-      api_version: "V1.0.0",
-    });
-  });
 
   app.use("/v1/auth", authRoutes)
 };
