@@ -1,5 +1,6 @@
 const authRoutes = require('./auth')
 const industryRoutes = require('./industry')
+const userRoutes = require('./user')
 module.exports = (app) => {
   app.get("/", (req, res) => {
     res.json({
@@ -11,4 +12,5 @@ module.exports = (app) => {
 
   app.use("/v1/auth", authRoutes)
   app.use("/v1/industry", industryRoutes)
+  app.use("/v1/user", userRoutes)
 };

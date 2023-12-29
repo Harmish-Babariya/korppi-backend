@@ -7,10 +7,7 @@ const makeMongoDbService = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
   try {
-    req.body = {
-      name: req.body.name,
-      status: 1
-    }
+    req.body.status = 1
     const data = await makeMongoDbService.createDocument(req.body)
     return sendResponse(res, null, 200, messages.successResponse(data));
   } catch (error) {

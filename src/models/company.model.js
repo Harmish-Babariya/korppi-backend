@@ -35,6 +35,9 @@ const companySchema = mongoose.Schema({
 	website_url: {
 		type: String
 	},
+	status: {
+		type: Number //1 - Active, 2 - Deactive, 3 - Deleted
+	}
 }, { timestamps: true });
 
 exports.companySchema = companySchema;
