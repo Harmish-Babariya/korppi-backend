@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const industrySchema = mongoose.Schema({
 	name: {
 		type: String
+	},
+	status: {
+		type: Number //1- active, 2-Deleted
 	}
 }, { timestamps: true });
 
