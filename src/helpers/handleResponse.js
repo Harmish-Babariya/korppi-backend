@@ -80,12 +80,10 @@ messages.loginSuccess = (data) => ({
     data
 });
 messages.passwordEmailWrong = () => ({
-  data: {
     isSuccess: false,
     status: 'BAD_REQUEST',
     message: 'Incorrect mobile phone number or password',
     data: {},
-  },
 });
 messages.adminPasswordEmailWrong = () => ({
     isSuccess: false,
