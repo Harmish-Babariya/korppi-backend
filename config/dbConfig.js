@@ -7,10 +7,7 @@ module.exports = function () {
 
 	// Connecting to the database
 	mongoose
-		.connect(URL, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		})
+		.connect(URL)
 		.then(() => {
 			console.log("INFO: Successfully connected to the database");
 		})
