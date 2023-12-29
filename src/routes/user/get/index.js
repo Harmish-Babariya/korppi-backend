@@ -16,8 +16,8 @@ exports.handler = async (req, res) => {
     if (req.body.search && typeof req.body.search !== "undefined" && req.body.search !== '') {
       matchQuery.$or = [
         { email: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
-        { first_name: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
-        { last_name: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
+        { firstName: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
+        { lastName: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
         { role: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
         { phone: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
       ];
