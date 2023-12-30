@@ -5,7 +5,7 @@ const companySchema = mongoose.Schema({
 	name: {
 		type: String
 	},
-	industry_id: {
+	industryId: {
 		type: String
 	},
 	size: {
@@ -20,19 +20,19 @@ const companySchema = mongoose.Schema({
 	country: {
 		type: String
 	},
-	postal_code: {
+	postalCode: {
 		type: String
 	},
-	linkedin_url: {
+	linkedinUrl: {
 		type: String
 	},
-	linkedin_about: {
+	linkedinAbout: {
 		type: String
 	},
-	linkedin_post: {
+	linkedinPost: {
 		type: String
 	},
-	website_url: {
+	websiteUrl: {
 		type: String
 	},
 	status: {
