@@ -15,10 +15,10 @@ const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
 exports.handler = async (req, res) => {
   try {
     let getCompany = await makeMongoDbServiceCompany.getSingleDocumentByQuery(
-      { _id: new ObjectId(req.body.company_id), status: 1 }
+      { _id: new ObjectId(req.body.companyId), status: 1 }
     )
 
-    if(!getCompany) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a company associated with this company_id.'))
+    if(!getCompany) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a company associated with this companyId.'))
 
     const generatedPassword = generatePwd(8, true, true, true);
     req.body.status = 1
@@ -34,10 +34,10 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   email: Joi.string().required().description("email"),
-  first_name: Joi.string().required().description("first_name"),
-  last_name: Joi.string().required().description("last_name"),
+  firstName: Joi.string().required().description("first_name"),
+  lastName: Joi.string().required().description("last_name"),
   role: Joi.string().optional().allow('').default('').description("role"),
   phone: Joi.string().required().description("phone"),
-  company_id: Joi.string().min(24).max(24).required().description("company_id"),
-  linkedin_url: Joi.string().optional().allow('').default('').description("linkedin_url")
+  companyId: Joi.string().min(24).max(24).required().description("companyId"),
+  linkedinUrl: Joi.string().optional().allow('').default('').description("linkedinUrl")
 });

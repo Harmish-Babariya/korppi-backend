@@ -19,23 +19,23 @@ exports.handler = async (req, res) => {
 
     if(!getUser) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a User associated with this id.'))
 
-    if(req.body.company_id && req.body.company_id !== '') {
+    if(req.body.companyId && req.body.companyId !== '') {
       let getCompany = await makeMongoDbServiceCompany.getSingleDocumentByQuery(
-        { _id: new ObjectId(req.body.company_id), status: 1 }
+        { _id: new ObjectId(req.body.companyId), status: 1 }
       )
 
-      if(!getCompany) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a company associated with this company_id.'))
+      if(!getCompany) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a company associated with this companyId.'))
     }
     
     let newData = {
       email: req.body.email ? req.body.email : undefined,
-      first_name: req.body.first_name ? req.body.first_name : undefined,
-      last_name: req.body.last_name ? req.body.last_name : undefined,
+      firstName: req.body.firstName ? req.body.firstName : undefined,
+      lastName: req.body.lastName ? req.body.lastName : undefined,
       role: req.body.role ? req.body.role : undefined,
       phone: req.body.phone ? req.body.phone : undefined,
       password: req.body.password ? bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_ROUND)) : undefined,
-      company_id: req.body.company_id ? req.body.company_id : undefined,
-      linkedin_url: req.body.linkedin_url ? req.body.linkedin_url : undefined,
+      companyId: req.body.companyId ? req.body.companyId : undefined,
+      linkedinUrl: req.body.linkedinUrl ? req.body.linkedinUrl : undefined,
       status: req.body.status ? req.body.status : undefined,
     }
 
@@ -44,7 +44,6 @@ exports.handler = async (req, res) => {
     return sendResponse(res, null, 200,messages.successResponse("Updated Sucessfully."))
 
   } catch (error) {
-    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
@@ -52,12 +51,12 @@ exports.handler = async (req, res) => {
 exports.rule = Joi.object({
   id: Joi.string().required().description("User id"),
   email: Joi.string().optional().description("email"),
-  first_name: Joi.string().optional().description("first_name"),
-  last_name: Joi.string().optional().description("last_name"),
+  firstName: Joi.string().optional().description("firstName"),
+  lastName: Joi.string().optional().description("lastName"),
   role: Joi.string().optional().description("role"),
   phone: Joi.string().optional().description("phone"),
   password: Joi.string().optional().description("password"),
-  company_id: Joi.string().min(24).max(24).optional().description("company_id"),
-  linkedin_url: Joi.string().optional().description("linkedin_url"),
+  companyId: Joi.string().min(24).max(24).optional().description("companyId"),
+  linkedinUrl: Joi.string().optional().description("linkedinUrl"),
   status: Joi.number().optional().description("status")
 });

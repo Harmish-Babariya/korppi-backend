@@ -18,6 +18,9 @@ exports.handler = async (req, res) => {
           const { password , __v, ...userData} = getUser._doc
           return sendResponse(res, null, 200, messages.successResponse(userData))
         } else {
+
+
+            
             let getUser = await makeMongoDbServiceUser.getSingleDocumentByQuery(
                 { _id: new ObjectId(req.body.userId), status: 1}
               )

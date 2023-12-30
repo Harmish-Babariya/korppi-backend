@@ -8,10 +8,10 @@ const userSchema = mongoose.Schema({
 	password: {
 		type: String
 	},
-	first_name: {
+	firstName: {
 		type: String
 	},
-	last_name: {
+	lastName: {
 		type: String
 	},
 	role: {
@@ -20,10 +20,10 @@ const userSchema = mongoose.Schema({
 	phone: {
 		type: String
 	},
-	company_id: {
+	companyId: {
 		type: String
 	},
-	linkedin_url: {
+	linkedinUrl: {
 		type: String
 	},
 	status: {
