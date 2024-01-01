@@ -14,10 +14,11 @@ exports.handler = async (req, res) => {
 
     if(!getIndustry) return sendResponse(res, null, 404,messages.recordNotFound())
     
-    await makeMongoDbService.updateDocument(req.body.id, { $set: {
-      name: req.body.name
-    } })
-    return sendResponse(res, null, 200,messages.successResponse("Updated Sucessfully."))
+    const newData = await makeMongoDbService.findOneAndUpdateDocument(
+      { _id: new ObjectId(req.body.id)}, 
+      { name: req.body.name },
+      { new: true })
+    return sendResponse(res, null, 200,messages.successResponse(newData))
 
   } catch (error) {
     return sendResponse(res, null, 500, messages.failureResponse());

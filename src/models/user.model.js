@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema({
 		type: Boolean,
 		default: false
 	}
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 exports.userSchema = userSchema;
 exports.User = mongoose.model("User", userSchema);

@@ -40,8 +40,14 @@ exports.handler = async (req, res) => {
     }
 
     newData = JSON.parse(JSON.stringify(newData))
-    await makeMongoDbService.updateDocument(req.body.id, { $set: newData })
-    return sendResponse(res, null, 200,messages.successResponse("Updated Sucessfully."))
+    const newUser = await makeMongoDbService.findOneAndUpdateDocument(
+      { _id: req.body.id},
+      newData,
+      { new: true }
+    )
+
+    const { password, __v, ...otherData } = newUser._doc
+    return sendResponse(res, null, 200,messages.successResponse(otherData))
 
   } catch (error) {
     return sendResponse(res, null, 500, messages.failureResponse());
