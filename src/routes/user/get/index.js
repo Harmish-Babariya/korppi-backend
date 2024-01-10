@@ -29,19 +29,19 @@ exports.handler = async (req, res) => {
       { $sort: { _id: -1 } },
       { $skip: skip },
       { $limit: pageSize },
-  ])
-  const userCount = await makeMongoDbService.getCountDocumentByQuery(matchQuery);
-  meta = {
-    pageNumber,
-    pageSize,
-    totalCount: userCount,
-    prevPage: parseInt(pageNumber) === 1 ? false : true,
-    nextPage: parseInt(userCount) / parseInt(pageSize) <= parseInt(pageNumber) ? false : true,
-    totalPages: Math.ceil(parseInt(userCount) / parseInt(pageSize)),
-  };
-    return sendResponse(res,null,200,messages.successResponse(userList, meta));
+    ])
+    const userCount = await makeMongoDbService.getCountDocumentByQuery(matchQuery);
+    meta = {
+      pageNumber,
+      pageSize,
+      totalCount: userCount,
+      prevPage: parseInt(pageNumber) === 1 ? false : true,
+      nextPage: parseInt(userCount) / parseInt(pageSize) <= parseInt(pageNumber) ? false : true,
+      totalPages: Math.ceil(parseInt(userCount) / parseInt(pageSize)),
+    };
+    return sendResponse(res, null, 200, messages.successResponse(userList, meta));
   } catch (error) {
-      
+
   }
 };
 
@@ -49,5 +49,5 @@ exports.rule = Joi.object({
   pageNumber: Joi.number().optional().default(1).description("PageNumber"),
   pageSize: Joi.number().optional().default(20).description("PageNumber"),
   search: Joi.string().optional().allow('').description('search').example('john'),
-  status: Joi.number().valid(1, 2).optional().default(1).description('1- active, 2- deactive, 3- deleted')
+  status: Joi.number().valid(1, 2).optional().default(1).description('1- active, 2- deactive')
 });

@@ -7,8 +7,12 @@ const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
     let body = req.body;
-    let id = body.id;
-    const companyDetails = await makeMongoDbServiceCompany.updateDocument(id, body);
+    let _id = body.id;
+    const companyDetails = await makeMongoDbServiceCompany.findOneAndUpdateDocument(
+        { _id },
+        body,
+        { new : true }
+    )
     return sendResponse(res, null, 200, messages.successResponse(companyDetails));
 }
 

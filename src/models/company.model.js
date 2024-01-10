@@ -9,7 +9,7 @@ const companySchema = mongoose.Schema({
 		type: String
 	},
 	size: {
-		type: String
+		type: Number
 	},
 	revenue: {
 		type: Number
