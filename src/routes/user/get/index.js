@@ -13,6 +13,11 @@ exports.handler = async (req, res) => {
     const pageSize = parseInt(req.body.pageSize);
     const skip = pageNumber === 1 ? 0 : parseInt((pageNumber - 1) * pageSize);
     const matchQuery = { status: req.body.status };
+
+    if(req.body.companyId && req.body.companyId !== '') {
+      matchQuery.companyId = req.body.companyId
+    }
+    
     if (req.body.search && typeof req.body.search !== "undefined" && req.body.search !== '') {
       matchQuery.$or = [
         { email: { $regex: '.*' + req.body.search + '.*', $options: 'i' } },
@@ -49,5 +54,6 @@ exports.rule = Joi.object({
   pageNumber: Joi.number().optional().default(1).description("PageNumber"),
   pageSize: Joi.number().optional().default(20).description("PageNumber"),
   search: Joi.string().optional().allow('').description('search').example('john'),
-  status: Joi.number().valid(1, 2).optional().default(1).description('1- active, 2- deactive')
+  status: Joi.number().valid(1, 2).optional().default(1).description('1- active, 2- deactive'),
+  companyId: Joi.string().optional().allow('').description('company id for user')
 });
