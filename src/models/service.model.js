@@ -29,7 +29,7 @@ const serviceSchema = mongoose.Schema({
 	benefits: {
 		type: Array
 	}
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 exports.serviceSchema = serviceSchema;
 exports.Service = mongoose.model("Service", serviceSchema);
