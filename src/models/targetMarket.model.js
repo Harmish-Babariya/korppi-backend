@@ -8,7 +8,16 @@ const targetMarket = mongoose.Schema({
 	target_name: {
 		type: String
 	},
-	fields: {
+	location: {
+		type: Array
+	},
+	employee_count: {
+		type: Array
+	},
+	industry: {
+		type: Array
+	},
+	job_title: {
 		type: String
 	}
 }, { timestamps: true });

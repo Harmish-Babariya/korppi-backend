@@ -28,6 +28,9 @@ const serviceSchema = mongoose.Schema({
 	},
 	benefits: {
 		type: Array
+	},
+	target_market_id:{
+		type: String
 	}
 }, { timestamps: true, versionKey: false });
 
