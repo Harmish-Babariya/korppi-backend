@@ -54,6 +54,6 @@ exports.rule = Joi.object({
   pageNumber: Joi.number().optional().default(1).description("PageNumber"),
   pageSize: Joi.number().optional().default(20).description("PageNumber"),
   search: Joi.string().optional().allow('').description('search').example('john'),
-  status: Joi.number().valid(1, 2).optional().default(1).description('1- active, 2- deactive'),
+  status: Joi.number().valid(1,2,3,4).optional().default(1).description('1- active, 2- deactive'),
   companyId: Joi.string().optional().allow('').description('company id for user')
 });

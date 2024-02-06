@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
 		type: String
 	},
 	status: {
-		type: Number //1 - Active, 2 - Deactive, 3 - Deleted
+		type: Number //1 - Active, 2 - Deactive, 3 - Deleted, 4 - warming
 	},
 	isAdmin: {
 		type: Boolean,
