@@ -64,5 +64,5 @@ exports.rule = Joi.object({
   password: Joi.string().optional().description("password"),
   companyId: Joi.string().min(24).max(24).optional().description("companyId"),
   linkedinUrl: Joi.string().optional().description("linkedinUrl"),
-  status: Joi.number().optional().description("status")
+  status: Joi.number().valid(1,2,3,4).optional().description("status")
 });
