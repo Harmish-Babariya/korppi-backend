@@ -15,20 +15,10 @@ exports.authenticateToken = (req, res, next) => {
       async (err, decodedToken) => {
         if (!err) {
           const id = decodedToken.id;
-          const deviceId = req.body.deviceId;
-          let user;
-          if (deviceId) {
-            user = await makeMongoDbServiceUser.getSingleDocumentByQuery({
-              _id: new ObjectId(id),
-              status: 1,
-              devices: { $in: [deviceId] },
-            });
-          } else {
-            user = await makeMongoDbServiceUser.getSingleDocumentByQuery({
-              _id: new ObjectId(id),
-              status: 1,
-            });
-          }
+          let user = await makeMongoDbServiceUser.getSingleDocumentByQuery({
+            _id: new ObjectId(id),
+            status: 1,
+          });
           if (user) {
             req.user = user;
             next();
@@ -57,11 +47,14 @@ exports.authenticateToken = (req, res, next) => {
       }
     );
   } else {
-    return res.set({ "Content-Type": "application/json" }).status(401).send({
-      isSuccess: false,
-      status: "UNAUTHORIZED",
-      message: "You are not authorized to access the request",
-      data: {},
-    });
+    return res
+      .set({ "Content-Type": "application/json" })
+      .status(401)
+      .send({
+        isSuccess: false,
+        status: "UNAUTHORIZED",
+        message: "You are not authorized to access the request",
+        data: {},
+      });
   }
 };
