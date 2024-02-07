@@ -16,21 +16,19 @@ const makeMongoDbServiceFeature = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
     try {
-        let services = await makeMongoDbService.getDocumentByQuery();
-    
-        return sendResponse(res, null, 200, messages.successResponse(updatedService));
+        let companyId = req.user.companyId;
+        let services = await makeMongoDbService.getDocumentByQueryPopulate({
+            company: companyId,
+        }, null, [
+            "user",
+            "company",
+            "features",
+            "benefits"
+        ]);
+
+        return sendResponse(res, null, 200, messages.successResponse(services));
     } catch (error) {
         console.error(error);
         return sendResponse(res, null, 500, messages.failureResponse());
     }
 }
-
-exports.rules = Joi.object({
-    title: Joi.string().required().description("title"),
-    price: Joi.number().required().description("price"),
-    currency: Joi.string().required().description("currency"),
-    under_offer: Joi.boolean().required().description("under_offer"),
-    offer: Joi.string().required().description("offer"),
-    features: Joi.array().required().description("features"),
-    benefits: Joi.array().required().description("benefits")
-});

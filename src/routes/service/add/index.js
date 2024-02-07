@@ -27,8 +27,8 @@ exports.handler = async (req, res) => {
         let benefits = req.body.benefits;
         let service = await makeMongoDbService.createDocument({
             title: req.body.title,
-            user_id: userId,
-            company_id: companyId,
+            user: userId,
+            company: companyId,
             price: req.body.price,
             currency: req.body.currency,
             under_offer: req.body.under_offer,
@@ -64,7 +64,7 @@ exports.handler = async (req, res) => {
 
         let updatedService = await makeMongoDbService.findOneAndUpdateDocument(
             { _id: service.id },
-            { features: featureIds, benefits: benefitIds, target_market_id: targetMarket.id },
+            { features: featureIds, benefits: benefitIds, target_market: targetMarket.id },
             { new: true }
         );
 

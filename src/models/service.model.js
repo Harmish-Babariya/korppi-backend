@@ -5,11 +5,13 @@ const serviceSchema = mongoose.Schema({
 	title: {
 		type: String
 	},
-	user_id: {
-		type: String
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
 	},
-	company_id: {
-		type: String
+	company: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Company'
 	},
 	price: {
 		type: String
@@ -23,14 +25,17 @@ const serviceSchema = mongoose.Schema({
 	offer: {
 		type: String
 	},
-	features: {
-		type: Array
-	},
-	benefits: {
-		type: Array
-	},
-	target_market_id:{
-		type: String
+	features: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Feature'
+	}],
+	benefits: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Benefit'
+	}],
+	target_market: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'TargetMarket'
 	}
 }, { timestamps: true, versionKey: false });
 

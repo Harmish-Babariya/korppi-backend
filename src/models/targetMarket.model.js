@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 const targetMarket = mongoose.Schema({
 	service_id: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Service'
 	},
 	target_name: {
 		type: String

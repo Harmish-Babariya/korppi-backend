@@ -6,7 +6,8 @@ const featureSchema = mongoose.Schema({
 		type: String
 	},
 	service_id: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Service'
 	}
 }, { timestamps: true });
 
