@@ -21,6 +21,7 @@ exports.handler = async (req, res) => {
         let companyId = req.user.companyId;
         let services = await makeMongoDbService.getDocumentByQueryPopulate(
             {
+                _id: serviceId,
                 user: userId,
                 company: companyId,
             }, null,
