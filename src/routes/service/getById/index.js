@@ -27,7 +27,13 @@ exports.handler = async (req, res) => {
             }, null,
             [
                 "user",
-                "company",
+                {
+                    path: "company",
+                    populate: {
+                        path: "industryId",
+                        model: "Industry"
+                    }
+                },
                 "features",
                 "benefits",
                 "target_market"
