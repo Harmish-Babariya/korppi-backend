@@ -6,7 +6,8 @@ const companySchema = mongoose.Schema({
 		type: String
 	},
 	industryId: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Industry'
 	},
 	size: {
 		type: Number
