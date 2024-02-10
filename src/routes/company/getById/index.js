@@ -8,7 +8,7 @@ const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
     const _id = req.body.id;
-    const companyDetail = await makeMongoDbServiceCompany.getDocumentById(_id);
+    const companyDetail = await makeMongoDbServiceCompany.getSingleDocumentByIdPopulate(_id,null,["industryId"])
     return sendResponse(res, null, 200, messages.successResponse(companyDetail));
 }
 
