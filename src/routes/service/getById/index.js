@@ -29,7 +29,8 @@ exports.handler = async (req, res) => {
                 "user",
                 "company",
                 "features",
-                "benefits"
+                "benefits",
+                "target_market"
             ]
         );
 
