@@ -32,6 +32,33 @@ const userSchema = mongoose.Schema({
 	isAdmin: {
 		type: Boolean,
 		default: false
+	},
+	emailConfig: {
+		type: {
+			email: {
+				type: String,
+				default: ''
+			},
+			password: {
+				type: String,
+				default: ''
+			},
+			smtpServer: {
+				type: String,
+				default: ''
+			},
+			smtpPort: {
+				type: String,
+				default: ''
+			}
+		},
+		default: {
+			email: '',
+			password: '',
+			smtpPort: '',
+			smtpServer: ''
+		},
+        _id: false
 	}
 }, { timestamps: true, versionKey: false });
 

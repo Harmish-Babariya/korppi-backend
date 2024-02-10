@@ -23,6 +23,16 @@ exports.handler = async (req, res) => {
     const generatedPassword = generatePwd(8, true, true, true);
     req.body.status = 1
     req.body.password = bcrypt.hashSync(generatedPassword, parseInt(process.env.SALT_ROUND))
+    req.body.emailConfig = {
+      email: req.body.email || '',
+      password: req.body.emailPassword || '',
+      smtpPort: req.body.smtpPort || '',
+      smtpServer: req.body.smtpServer || ''
+   }
+    delete req.body.emailPassword
+    delete req.body.smtpPort
+    delete req.body.smtpServer
+    console.log(req.body)
     const data = await makeMongoDbService.createDocument(req.body)
     data.password = generatedPassword
     return sendResponse(res, null, 200, messages.successResponse(data));
@@ -39,5 +49,8 @@ exports.rule = Joi.object({
   role: Joi.string().optional().allow('').default('').description("role"),
   phone: Joi.string().required().description("phone"),
   companyId: Joi.string().min(24).max(24).required().description("companyId"),
-  linkedinUrl: Joi.string().optional().allow('').default('').description("linkedinUrl")
+  linkedinUrl: Joi.string().optional().allow('').default('').description("linkedinUrl"),
+  emailPassword: Joi.string().optional().allow(''),
+  smtpServer: Joi.string().optional().allow(''),
+  smtpPort: Joi.string().optional().allow('')
 });

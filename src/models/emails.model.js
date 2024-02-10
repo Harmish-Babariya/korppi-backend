@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const mongoose = require("mongoose");
 
-const targetMarket = mongoose.Schema({
+const emails = mongoose.Schema({
 	company_id: {
 		type: String
 	},
@@ -40,5 +40,5 @@ const targetMarket = mongoose.Schema({
 	}
 }, { timestamps: true });
 
-exports.targetMarket = targetMarket;
-exports.TargetMarket = mongoose.model("TargetMarket", targetMarket);
+exports.emails = emails;
+exports.Emails = mongoose.model("Emails", emails);
