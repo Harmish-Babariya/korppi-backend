@@ -29,7 +29,8 @@ exports.handler = async (req, res) => {
                 }
             },
             "features",
-            "benefits"
+            "benefits",
+            'target_market'
         ]);
 
         return sendResponse(res, null, 200, messages.successResponse(services));
