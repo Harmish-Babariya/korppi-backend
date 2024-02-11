@@ -3,6 +3,7 @@ const industryRoutes = require('./industry')
 const userRoutes = require('./user')
 const companyRoutes = require("./company")
 const serviceRoutes = require("./service")
+const marketRoutes = require("./targetMarket")
 
 module.exports = (app) => {
     app.get("/", (req, res) => {
@@ -18,6 +19,7 @@ module.exports = (app) => {
     app.use("/v1/user", userRoutes)
     app.use("/v1/company", companyRoutes)
     app.use("/v1/service", serviceRoutes)
+    app.use("/v1/target-market", marketRoutes)
 
     app.use((err, req, res, next) => {
         console.error(err); // Log the error for server-side debugging

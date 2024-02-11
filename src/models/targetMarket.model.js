@@ -2,23 +2,23 @@
 const mongoose = require("mongoose");
 
 const targetMarket = mongoose.Schema({
-	service_id: {
+	serviceId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Service'
 	},
-	target_name: {
+	targetName: {
 		type: String
 	},
 	location: {
 		type: Array
 	},
-	employee_count: {
+	employeeCount: {
 		type: Array
 	},
 	industry: {
 		type: Array
 	},
-	job_title: {
+	jobTitle: {
 		type: String
 	}
 }, { timestamps: true });
