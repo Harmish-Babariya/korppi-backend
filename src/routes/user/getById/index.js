@@ -9,13 +9,13 @@ const makeMongoDbServiceUser = require("../../../services/db/dbService")({
 exports.handler = async (req, res) => {
     try {
         if(req.user && req.user._id && !req.user.isAdmin) {
-          let getUser = await makeMongoDbServiceUser.getSingleDocumentByQuery(
-              { _id: new ObjectId(req.user._id), status: 1}
-          )
-
+        //   let getUser = await makeMongoDbServiceUser.getSingleDocumentByQuery(
+        //       { _id: new ObjectId(req.user._id), status: 1}
+        //   )
+          let getUser = await makeMongoDbServiceUser.getDocumentByQueryPopulate({ _id: new ObjectId(req.user._id), status: 1}, null,["companyId"])
           if(!getUser) return sendResponse(res, null, 404,messages.recordNotFound('Unable to locate a User associated with this id.'))
           
-          const { password , __v, ...userData} = getUser._doc
+          const { password , __v, ...userData} = getUser[0]._doc
           return sendResponse(res, null, 200, messages.successResponse(userData))
         } else {
 
@@ -31,6 +31,7 @@ exports.handler = async (req, res) => {
             return sendResponse(res, null, 200, messages.successResponse(userData))
         }
 		} catch (error) {
+            console.log(error)
 			return sendResponse(res, null, 500, messages.failureResponse());
 		}
 }
