@@ -54,12 +54,12 @@ exports.handler = async (req, res) => {
         let benefitIds = benefitDocuments.map(benefit => benefit.id);
 
         let targetMarket = await makeMongoDbServiceTargetMarket.createDocument({
-            service_id: service.id,
-            target_name: req.body.target_name,
+            serviceId: service.id,
+            targetName: req.body.target_name,
             location: req.body.location,
-            employee_count: req.body.employee_count,
+            employeeCount: req.body.employee_count,
             industry: req.body.industry,
-            job_title: req.body.job_title
+            jobTitle: req.body.job_title
         });
 
         let updatedService = await makeMongoDbService.findOneAndUpdateDocument(
