@@ -21,7 +21,8 @@ const userSchema = mongoose.Schema({
 		type: String
 	},
 	companyId: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Company'
 	},
 	linkedinUrl: {
 		type: String
