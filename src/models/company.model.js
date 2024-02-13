@@ -38,6 +38,9 @@ const companySchema = mongoose.Schema({
 	},
 	status: {
 		type: Number //1 - Active, 2 - Deactive, 3 - Deleted
+	},
+	partnerCompanies: {
+		type: String
 	}
 }, { timestamps: true });
 

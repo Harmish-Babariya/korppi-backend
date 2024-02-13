@@ -29,5 +29,6 @@ exports.rules = Joi.object({
     linkedinAbout: Joi.string().optional().description("linkedin about"),
     linkedinPost: Joi.string().optional().description("linkedin post"),
     websiteUrl: Joi.string().optional().description("website url"),
-    status: Joi.number().optional().description("status")
+    status: Joi.number().optional().description("status"),
+    partnerCompanies: Joi.string().optional().description("coma separeted company name"),
 });

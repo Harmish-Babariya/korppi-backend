@@ -37,7 +37,7 @@ exports.handler = async (req, res) => {
       companyId: req.body.companyId ? req.body.companyId : undefined,
       linkedinUrl: req.body.linkedinUrl ? req.body.linkedinUrl : undefined,
       status: req.body.status ? req.body.status : undefined,
-      emailConfig: Object.keys(req.body.emailConfig).length > 0 ? req.body.emailConfig : undefined
+      emailConfig: req.body.emailConfig && Object.keys(req.body.emailConfig).length > 0 ? req.body.emailConfig : undefined
     }
 
     newData = JSON.parse(JSON.stringify(newData))
@@ -51,6 +51,7 @@ exports.handler = async (req, res) => {
     return sendResponse(res, null, 200,messages.successResponse(otherData))
 
   } catch (error) {
+    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
