@@ -51,7 +51,6 @@ exports.handler = async (req, res) => {
     return sendResponse(res, null, 200,messages.successResponse(otherData))
 
   } catch (error) {
-    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
