@@ -4,6 +4,7 @@ const userRoutes = require('./user')
 const companyRoutes = require("./company")
 const serviceRoutes = require("./service")
 const marketRoutes = require("./targetMarket")
+const prospectsRoutes = require("./prospects")
 
 module.exports = (app) => {
     app.get("/", (req, res) => {
@@ -20,6 +21,7 @@ module.exports = (app) => {
     app.use("/v1/company", companyRoutes)
     app.use("/v1/service", serviceRoutes)
     app.use("/v1/target-market", marketRoutes)
+    app.use("/v1/prospects", prospectsRoutes)
 
     app.use((err, req, res, next) => {
         console.error(err); // Log the error for server-side debugging
