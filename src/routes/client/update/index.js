@@ -1,14 +1,14 @@
-const { Company } = require("../../../models/company.model");
+const { Client} = require("../../../models/client.model");
 const Joi = require("joi");
 const { sendResponse, messages } = require("../../../helpers/handleResponse")
-const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
-    model: Company,
+const makeMongoDbServiceClient = require("../../../services/db/dbService")({
+    model: Client,
 });
 
 exports.handler = async (req, res) => {
     let body = req.body;
     let _id = body.id;
-    const companyDetails = await makeMongoDbServiceCompany.findOneAndUpdateDocument(
+    const companyDetails = await makeMongoDbServiceClient.findOneAndUpdateDocument(
         { _id },
         body,
         { new : true }

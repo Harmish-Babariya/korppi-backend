@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 const mongoose = require("mongoose");
 
-const companySchema = mongoose.Schema({
+const clientSchema = mongoose.Schema({
 	name: {
 		type: String
 	},
 	industryId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Industry'
+		ref: 'Industry',
+		default: null
 	},
 	size: {
 		type: Number
@@ -38,8 +39,14 @@ const companySchema = mongoose.Schema({
 	},
 	status: {
 		type: Number //1 - Active, 2 - Deactive, 3 - Deleted
-	}
+	},
+	partnerCompanies: {
+		type: String
+	},
+	email: {
+		type: String
+	},
 }, { timestamps: true });
 
-exports.companySchema = companySchema;
-exports.Company = mongoose.model("Company", companySchema);
+exports.clientSchema = clientSchema;
+exports.Client = mongoose.model("Client", clientSchema);

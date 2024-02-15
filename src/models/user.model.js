@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
 	},
 	companyId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Company'
+		ref: 'Client'
 	},
 	linkedinUrl: {
 		type: String

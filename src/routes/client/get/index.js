@@ -1,8 +1,8 @@
 const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
-const { Company } = require("../../../models/company.model");
+const { Client} = require("../../../models/client.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
-    model: Company,
+    model: Client,
 });
 
 exports.handler = async (req, res) => {

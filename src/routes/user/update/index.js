@@ -3,12 +3,12 @@ const Joi = require("joi");
 const bcrypt = require('bcrypt');
 const { ObjectId } = require("mongodb");
 const { User } = require("../../../models/user.model");
-const { Company } = require("../../../models/company.model");
+const { Client} = require("../../../models/client.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: User,
 });
-const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
-  model: Company,
+const makeMongoDbServiceClient = require("../../../services/db/dbService")({
+  model: Client,
 });
 
 exports.handler = async (req, res) => {
@@ -20,7 +20,7 @@ exports.handler = async (req, res) => {
     if(!getUser) return sendResponse(res, null, 404,messages.invalidRequest('Unable to locate a User associated with this id.'))
 
     if(req.body.companyId && req.body.companyId !== '') {
-      let getCompany = await makeMongoDbServiceCompany.getSingleDocumentByQuery(
+      let getCompany = await makeMongoDbServiceClient.getSingleDocumentByQuery(
         { _id: new ObjectId(req.body.companyId), status: 1 }
       )
 

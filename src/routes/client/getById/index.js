@@ -1,8 +1,8 @@
-const { Company } = require("../../../models/company.model");
+const { Client} = require("../../../models/client.model");
 const Joi = require("joi");
 const { sendResponse, messages } = require("../../../helpers/handleResponse")
 const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
-    model: Company,
+    model: Client,
 });
 
 

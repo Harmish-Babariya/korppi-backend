@@ -1,5 +1,6 @@
 const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
+const { ObjectId } = require("mongodb");
 const { User } = require("../../../models/user.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: User,
@@ -15,7 +16,7 @@ exports.handler = async (req, res) => {
     const matchQuery = { status: req.body.status };
 
     if(req.body.companyId && req.body.companyId !== '') {
-      matchQuery.companyId = req.body.companyId
+      matchQuery.companyId = new ObjectId(req.body.companyId)
     }
     
     if (req.body.search && typeof req.body.search !== "undefined" && req.body.search !== '') {

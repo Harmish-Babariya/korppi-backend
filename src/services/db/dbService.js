@@ -86,7 +86,8 @@ function makeMongoDbService({ model }) {
   const getCountDocumentByQuery = (where) =>
     new Promise((resolve, reject) => {
       model
-        .countDocuments(where)
+        .find(where)
+        .count()
         .then((data) => {
           return resolve(data);
         })
