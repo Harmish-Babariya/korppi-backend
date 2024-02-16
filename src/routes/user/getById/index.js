@@ -17,13 +17,14 @@ exports.handler = async (req, res) => {
           
           const { password , __v, ...userData} = getUser[0]._doc
           return sendResponse(res, null, 200, messages.successResponse(userData))
-        } else {
-
-
+        } else if(req.user && req.user._id && req.user.isAdmin && !req.body.userId) {
+            let getUser = await makeMongoDbServiceUser.getDocumentByQueryPopulate({ _id: new ObjectId(req.user._id), status: 1}, null,["companyId"])
+            if(!getUser) return sendResponse(res, null, 404,messages.recordNotFound('Unable to locate a User associated with this id.'))
             
-            let getUser = await makeMongoDbServiceUser.getSingleDocumentByQuery(
-                { _id: new ObjectId(req.body.userId), status: 1}
-              )
+            const { password , __v, ...userData} = getUser[0]._doc
+            return sendResponse(res, null, 200, messages.successResponse(userData))
+        } else {     
+            let getUser = await makeMongoDbServiceUser.getDocumentByQueryPopulate({ _id: new ObjectId(req.body.userId), status: 1}, null,["companyId"])
         
             if(!getUser) return sendResponse(res, null, 404,messages.recordNotFound('Unable to locate a User associated with this id.'))
             
