@@ -1,5 +1,4 @@
 const { sendResponse, messages } = require("../../../helpers/handleResponse");
-const { ObjectId } = require("mongodb");
 const Joi = require("joi");
 const { Prospects } = require("../../../models/prospects.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
@@ -15,7 +14,7 @@ const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
 });
 
 exports.handler = async (req, res) => {
-  try {
+  try { 
     let industryId = await makeMongoDbServiceIndustry.getSingleDocumentByQuery(
       { name: { $in: req.body.industry } },
       ["_id"]
@@ -31,7 +30,6 @@ exports.handler = async (req, res) => {
     );
     
     companies = companies.map((ele) => ele._id);
-    console.log(companies)
     let meta = {};
     let prospectsList = [];
     const pageNumber = parseInt(req.body.pageNumber);
