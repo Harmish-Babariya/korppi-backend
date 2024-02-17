@@ -19,7 +19,7 @@ exports.handler = async (req, res) => {
         })
     }
     
-    return sendResponse(res, null, 200, messages.successResponse(data));
+    return sendResponse(res, null, 200, messages.successResponse());
   } catch (error) {
     console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
