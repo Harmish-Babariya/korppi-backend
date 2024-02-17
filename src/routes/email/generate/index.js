@@ -29,7 +29,7 @@ exports.rule = Joi.object({
     emails: Joi.array().items({
         companyId: Joi.string().required().description("companyId"),
         prospectId: Joi.string().required().description("prospectId"),
-    }).required,
+    }).required(),
     userId: Joi.string().required().description("userId"),
     sentBy: Joi.string().required().description("sentBy"),
 });
