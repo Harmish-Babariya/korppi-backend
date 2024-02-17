@@ -68,7 +68,7 @@ const emails = mongoose.Schema({
 	scheduleId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'ScheduledEmail',
-		default: ''
+		default: null
 	},
 	openAt: {
 		type: Date,
