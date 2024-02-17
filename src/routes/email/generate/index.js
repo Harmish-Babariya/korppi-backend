@@ -8,7 +8,7 @@ const makeMongoDbService = require("../../../services/db/dbService")({
 exports.handler = async (req, res) => {
   try {
     if(req.body.emails) {
-        req.body.Emails.map(async ele => {
+        req.body.emails.map(async ele => {
             const emailData = {
                 companyId: ele.companyId,
                 prospectId: ele.prospectId,
@@ -21,6 +21,7 @@ exports.handler = async (req, res) => {
     
     return sendResponse(res, null, 200, messages.successResponse(data));
   } catch (error) {
+    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
