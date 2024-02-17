@@ -2,41 +2,81 @@
 const mongoose = require("mongoose");
 
 const emails = mongoose.Schema({
-	company_id: {
-		type: String
+	companyId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Company'
 	},
-	user_id: {
+	prospectId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Prospects'
+	},
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	sentBy: {
 		type: String
 	},
 	subject: {
-		type: String
+		type: String,
+		default: ''
 	},
 	body: {
-		type: String
+		type: String,
+		default: ''
 	},
-	llm_used: {
-		type: String
+	llmUsed: {
+		type: String,
+		default: ''
 	},
-	pixel_uuid: {
-		type: String
+	pixelUuid: {
+		type: String,
+		default: ''
 	},
-	tokens_used: {
-		type: String
+	tokensUsed: {
+		type: String,
+		default: ''
 	},
-	is_sent: {
-		type: Boolean
+	isSent: {
+		type: Boolean,
+		default: false
 	},
-	sent_at: {
-		type: Date
+	sentAt: {
+		type: Date,
+		default: ''
 	},
-	is_open: {
-		type: Boolean
+	isOpen: {
+		type: Boolean,
+		default: false
 	},
-	open_at: {
-		type: Date
+	isUnsubscribed: {
+		type: Boolean,
+		default: false
+	},
+	ctaClicked: {
+		type: Boolean,
+		default: false
+	},
+	identifier: {
+		type: Boolean,
+		default: false
+	},
+	isScheduled: {
+		type: Boolean,
+		default: false
+	},
+	scheduleId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'ScheduledEmail',
+		default: ''
+	},
+	openAt: {
+		type: Date,
+		default: ''
 	},
 	counts: {
-		type: Number
+		type: Number,
+		default: 0
 	}
 }, { timestamps: true });
 
