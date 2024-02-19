@@ -28,7 +28,7 @@ exports.handler = async (req, res) => {
         
             if(!getUser) return sendResponse(res, null, 404,messages.recordNotFound('Unable to locate a User associated with this id.'))
             
-            const { password , __v, ...userData} = getUser._doc
+            const { password , __v, ...userData} = getUser[0]._doc
             return sendResponse(res, null, 200, messages.successResponse(userData))
         }
 		} catch (error) {
