@@ -15,15 +15,21 @@ exports.handler = async (req, res) => {
     let port = req.user.emailConfig.smtpPort
     let prospectsData = await makeMongoDbService.getDocumentByQueryPopulate(
       {
-        userId: userId, isSent: false
+        userId: userId, isSent: false, isScheduled: false
       },
       ["prospectId", 'subject', 'body'],
       ["prospectId"]
     );
-    let subject = prospectsData[0].subject
-    let body = prospectsData[0].body
-    let prospectsEmails = prospectsData.map(ele => ele.prospectId.email)
-    sendMail(host, fromEmail, pwd, prospectsEmails, port, userId, subject, body)
+
+    if(prospectsData) {
+      prospectsData.map(email => {
+        let subject = email.subject
+        let body = email.body
+        let prospectsEmails = email.prospectId.email
+        console.log(host, fromEmail, pwd, prospectsEmails, port, userId, subject, body)
+        sendMail(host, fromEmail, pwd, prospectsEmails, port, userId, subject, body)
+      })
+    }
     return sendResponse(res, null, 200, messages.successResponse());
   } catch (error) {
     console.log(error);

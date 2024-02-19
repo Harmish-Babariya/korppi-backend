@@ -2,6 +2,7 @@ const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
 const { Emails } = require("../../../models/emails.model");
 const { Service } = require("../../../models/service.model");
+const { ObjectId } = require("mongodb");
 const generateBody = require("../../../helpers/generateBody");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: Emails,
@@ -11,6 +12,7 @@ const makeMongoDbServiceService = require("../../../services/db/dbService")({
 });
 
 exports.handler = async (req, res) => {
+  try {
   let serviceId = req.body.serviceId
   let service = await makeMongoDbServiceService.getDocumentByQueryPopulate(
     {
@@ -42,11 +44,13 @@ exports.handler = async (req, res) => {
   let role = req.user.role
   let email = req.user.email
   let website = service.company.websiteUrl
-  let body = generateBody(serviceId, serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
-  try {
-    if(req.body.emails) {
-        req.body.emails.map(async ele => {
+
+  if(req.body.emails) {
+    req.body.emails.map(async ele => {
+      let emailId = new ObjectId()
+      let body = generateBody(emailId, serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
             const emailData = {
+                _id: emailId,
                 companyId: ele.companyId,
                 prospectId: ele.prospectId,
                 userId: req.body.userId,
