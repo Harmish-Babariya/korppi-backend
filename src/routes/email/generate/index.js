@@ -42,7 +42,7 @@ exports.handler = async (req, res) => {
   let role = req.user.role
   let email = req.user.email
   let website = service.company.websiteUrl
-  let body = generateBody(serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
+  let body = generateBody(serviceId, serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
   try {
     if(req.body.emails) {
         req.body.emails.map(async ele => {

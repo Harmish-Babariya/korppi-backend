@@ -15,7 +15,7 @@ exports.handler = async (req, res) => {
     let port = req.user.emailConfig.smtpPort
     let prospectsData = await makeMongoDbService.getDocumentByQueryPopulate(
       {
-        userId: userId,
+        userId: userId, isSent: false
       },
       ["prospectId", 'subject', 'body'],
       ["prospectId"]
