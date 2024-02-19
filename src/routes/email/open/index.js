@@ -3,7 +3,7 @@ const { Emails } = require("../../../models/emails.model");
 const path = require('path');
 
 exports.handler = async (req, res) => {
-    await Emails.updateOne({_id: req.params.id}, { $set: { openAt: Date.now()}, $inc: { count: 1 } } )
+    await Emails.updateOne({_id: req.params.id}, { $set: { openAt: Date.now()}, $inc: { counts: 1 } } )
     res.sendFile(path.resolve(__dirname, '../../../../public', '1x1-00000000.png'))
     res.end()
 };
