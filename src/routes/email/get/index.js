@@ -20,7 +20,7 @@ exports.handler = async (req, res) => {
     // }
     emailList = await makeMongoDbService.getDocumentByQueryPopulate(
         matchQuery,
-        ["prospectId", "companyId", "isSent", "sentAt", "isOpen", "count", "openAt"],
+        ["prospectId", "companyId", "isSent", "sentAt", "isOpen", "counts", "openAt"],
         ["prospectId", "companyId",],
         pageNumber,
         pageSize,
