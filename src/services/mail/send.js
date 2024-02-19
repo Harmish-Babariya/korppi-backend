@@ -5,7 +5,7 @@ const makeMongoDbService = require("../db/dbService")({
   model: Emails,
 });
 
-function sendMail(host, fromEmail, pwd, toEmail, port, id) {
+function sendMail(host, fromEmail, pwd, toEmail, port, id, subject, html) {
   const transporter = nodemailer.createTransport({
     host: host,
     port: port || 587,
@@ -23,8 +23,8 @@ function sendMail(host, fromEmail, pwd, toEmail, port, id) {
   const mailOptions = {
     from: fromEmail,
     to: toEmail,
-    subject: "Test Email",
-    text: "This is a test email sent using Nodemailer.",
+    subject: subject,
+    html: html
   };
 
   // Send email

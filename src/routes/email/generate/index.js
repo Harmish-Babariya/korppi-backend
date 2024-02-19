@@ -1,11 +1,48 @@
 const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
 const { Emails } = require("../../../models/emails.model");
+const { Service } = require("../../../models/service.model");
+const generateBody = require("../../../helpers/generateBody");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: Emails,
 });
+const makeMongoDbServiceService = require("../../../services/db/dbService")({
+  model: Service,
+});
 
 exports.handler = async (req, res) => {
+  let serviceId = req.body.serviceId
+  let service = await makeMongoDbServiceService.getDocumentByQueryPopulate(
+    {
+        _id: serviceId
+    }, null,
+    [
+        "user",
+        {
+            path: "company",
+            populate: {
+                path: "industryId",
+                model: "Industry"
+            }
+        },
+        "features",
+        "benefits",
+        "target_market"
+    ]
+  );
+  service = service[0]
+  let serviceName = service.title
+  let companyName = service.company.name
+  let title = service.title
+  let price = service.price
+  let offer = service.offer
+  let features = service.features.map(ele => ele.description)
+  let benefits = service.benefits.map(ele => ele.description)
+  let userName = req.user.firstName + ' ' + req.user.lastName
+  let role = req.user.role
+  let email = req.user.email
+  let website = service.company.websiteUrl
+  let body = generateBody(serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
   try {
     if(req.body.emails) {
         req.body.emails.map(async ele => {
@@ -13,7 +50,9 @@ exports.handler = async (req, res) => {
                 companyId: ele.companyId,
                 prospectId: ele.prospectId,
                 userId: req.body.userId,
-                sentBy: req.body.sentBy
+                sentBy: req.body.sentBy,
+                body,
+                subject: serviceName +" offer from " + companyName
             }
             await makeMongoDbService.createDocument(emailData)
         })
@@ -28,9 +67,10 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
     emails: Joi.array().items({
-        companyId: Joi.string().required().description("companyId"),
-        prospectId: Joi.string().required().description("prospectId"),
+        companyId: Joi.string().min(24).max(24).required().description("companyId"),
+        prospectId: Joi.string().min(24).max(24).required().description("prospectId"),
     }).required(),
-    userId: Joi.string().required().description("userId"),
+    serviceId: Joi.string().min(24).max(24).required().description("serviceId"),
+    userId: Joi.string().min(24).max(24).required().description("userId"),
     sentBy: Joi.string().required().description("sentBy"),
 });

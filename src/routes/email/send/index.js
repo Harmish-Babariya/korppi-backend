@@ -17,11 +17,13 @@ exports.handler = async (req, res) => {
       {
         userId: userId,
       },
-      ["prospectId"],
+      ["prospectId", 'subject', 'body'],
       ["prospectId"]
     );
-    prospectsData = prospectsData.map(ele => ele.prospectId.email)
-    sendMail(host, fromEmail, pwd, prospectsData, port, userId)
+    let subject = prospectsData[0].subject
+    let body = prospectsData[0].body
+    let prospectsEmails = prospectsData.map(ele => ele.prospectId.email)
+    sendMail(host, fromEmail, pwd, prospectsEmails, port, userId, subject, body)
     return sendResponse(res, null, 200, messages.successResponse());
   } catch (error) {
     console.log(error);
@@ -30,5 +32,5 @@ exports.handler = async (req, res) => {
 };
 
 exports.rule = Joi.object({
-  isScheduled: Joi.boolean().required().description("isScheduled"),
+  isScheduled: Joi.boolean().required().description("isScheduled")
 });
