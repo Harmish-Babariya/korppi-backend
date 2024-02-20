@@ -14,9 +14,15 @@ exports.handler = async (req, res) => {
 
     if(!getIndustry) return sendResponse(res, null, 404,messages.recordNotFound())
     
+    let data = { 
+      name: req.body.name ? req.body.name : undefined,
+      status: req.body.status ? req.body.status : undefined
+    }
+
+    data = JSON.parse(JSON.stringify(data))
     const newData = await makeMongoDbService.findOneAndUpdateDocument(
       { _id: new ObjectId(req.body.id)}, 
-      { name: req.body.name },
+      data,
       { new: true })
     return sendResponse(res, null, 200,messages.successResponse(newData))
 
@@ -27,5 +33,6 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   id: Joi.string().required().description("Industry id"),
-  name: Joi.string().required().description("Industry Name")
+  name: Joi.string().optional().description("Industry Name"),
+  status: Joi.number().optional().description("status")
 });
