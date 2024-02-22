@@ -5,6 +5,9 @@ const scheduledEmailSchema = mongoose.Schema({
 	scheduledTime: {
 		type: String
 	},
+	jobId: {
+		type: String
+	},
 	emailsGenerated: {
 		type: Number 
 	},
@@ -23,4 +26,4 @@ const scheduledEmailSchema = mongoose.Schema({
 }, { timestamps: true });
 
 exports.scheduledEmailSchema = scheduledEmailSchema;
-exports.Industry = mongoose.model("ScheduledEmail", scheduledEmailSchema);
+exports.ScheduledEmail = mongoose.model("ScheduledEmail", scheduledEmailSchema);
