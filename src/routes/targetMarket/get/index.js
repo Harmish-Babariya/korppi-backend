@@ -19,6 +19,10 @@ exports.handler = async (req, res) => {
       matchQuery.serviceId = new ObjectId(req.body.serviceId);
     }
 
+    if (req.body.targetMarketId && req.body.targetMarketId != '') {
+      matchQuery._id = new ObjectId(req.body.targetMarketId);
+    }
+
     if (req.body.search && typeof req.body.search !== "undefined" && req.body.search !== '') {
       matchQuery.$or = [
         { targetName: { $regex: '.*' + req.body.search + '.*', $options: 'i' } }
@@ -49,6 +53,7 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   serviceId: Joi.string().optional().description("Service Id"),
+  targetMarketId: Joi.string().optional().description("TargetMarket Id"),
   pageNumber: Joi.number().optional().default(1).description("PageNumber"),
   pageSize: Joi.number().optional().default(20).description("PageNumber"),
   search: Joi.string().optional().allow('').description('search').example('john')
