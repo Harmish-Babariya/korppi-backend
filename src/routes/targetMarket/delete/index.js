@@ -12,11 +12,9 @@ const makeMongoDbServiceService = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
   try {
-    const newId = new ObjectId()
-    req.body._id = newId
-    const data = await makeMongoDbService.createDocument(req.body);
+    await makeMongoDbService.deleteDocument(req.body.targetMarketId)
     await makeMongoDbServiceService.updateDocument(req.body.serviceId, {
-      $push: { target_market: newId }
+      $pull: { target_market: req.body.targetMarketId }
     })
     return sendResponse(res, null, 200, messages.successResponse(data));
   } catch (error) {
@@ -26,9 +24,5 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   serviceId: Joi.string().required().description("Service ID"),
-  targetName: Joi.string().required().description("Target Name"),
-  location: Joi.array().items(Joi.string()).required().description("Location"),
-  employeeCount: Joi.array().items(Joi.number()).required().description("Employee Count"),
-  industry: Joi.array().items(Joi.string()).required().description("Industry"),
-  jobTitle: Joi.string().required().description("Job Title")
+  targetMarketId: Joi.string().required().description("targetMarketId")
 });

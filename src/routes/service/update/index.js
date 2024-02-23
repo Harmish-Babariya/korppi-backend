@@ -38,7 +38,7 @@ exports.handler = async (req, res) => {
         });
 
         await Feature.deleteMany({ service_id: service.id });
-        await TargetMarket.deleteMany({ serviceId: service.id });
+        // await TargetMarket.deleteMany({ serviceId: service.id });
         await Benefit.deleteMany({ service_id: service.id });
 
         let featurePromises = features.map(description => {
@@ -59,18 +59,19 @@ exports.handler = async (req, res) => {
         let benefitDocuments = await Promise.all(benefitPromises);
         let benefitIds = benefitDocuments.map(benefit => benefit.id);
 
-        let targetMarket = await makeMongoDbServiceTargetMarket.createDocument({
-            serviceId: service.id,
-            targetName: req.body.target_name,
-            location: req.body.location,
-            employeeCount: req.body.employee_count,
-            industry: req.body.industry,
-            jobTitle: req.body.job_title
-        });
+        // let targetMarket = await makeMongoDbServiceTargetMarket.createDocument({
+        //     serviceId: service.id,
+        //     targetName: req.body.target_name,
+        //     location: req.body.location,
+        //     employeeCount: req.body.employee_count,
+        //     industry: req.body.industry,
+        //     jobTitle: req.body.job_title
+        // });
 
         let updatedService = await makeMongoDbService.findOneAndUpdateDocument(
             { _id: service.id },
-            { features: featureIds, benefits: benefitIds, target_market: targetMarket.id },
+            // { features: featureIds, benefits: benefitIds, target_market: targetMarket.id },
+            { features: featureIds, benefits: benefitIds },
             { new: true }
         );
 
@@ -90,9 +91,9 @@ exports.rules = Joi.object({
     offer: Joi.string().required().description("offer"),
     features: Joi.array().required().description("features"),
     benefits: Joi.array().required().description("benefits"),
-    target_name: Joi.string().required().description("target_name"),
-    location: Joi.array().required().description("location"),
-    employee_count: Joi.array().required().description("employee_count"),
-    industry: Joi.array().required().description("industry"),
-    job_title: Joi.string().required().description("job_title"),
+    // target_name: Joi.string().required().description("target_name"),
+    // location: Joi.array().required().description("location"),
+    // employee_count: Joi.array().required().description("employee_count"),
+    // industry: Joi.array().required().description("industry"),
+    // job_title: Joi.string().required().description("job_title"),
 });
