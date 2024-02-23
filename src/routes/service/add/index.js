@@ -64,7 +64,7 @@ exports.handler = async (req, res) => {
 
         let updatedService = await makeMongoDbService.findOneAndUpdateDocument(
             { _id: service.id },
-            { features: featureIds, benefits: benefitIds, target_market: targetMarket.id },
+            { features: featureIds, benefits: benefitIds, target_market: [targetMarket.id] },
             { new: true }
         );
 

@@ -33,10 +33,10 @@ const serviceSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Benefit'
 	}],
-	target_market: {
+	target_market: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'TargetMarket'
-	}
+	}]
 }, { timestamps: true, versionKey: false });
 
 exports.serviceSchema = serviceSchema;
