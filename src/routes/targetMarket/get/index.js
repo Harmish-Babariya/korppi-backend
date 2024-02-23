@@ -1,5 +1,6 @@
 const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
+const { ObjectId } = require("mongodb");
 const { TargetMarket } = require("../../../models/targetMarket.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: TargetMarket,
@@ -13,6 +14,11 @@ exports.handler = async (req, res) => {
     const pageSize = parseInt(req.body.pageSize);
     const skip = pageNumber === 1 ? 0 : parseInt((pageNumber - 1) * pageSize);
     const matchQuery = { };
+
+    if (req.body.serviceId && req.body.serviceId != '') {
+      matchQuery.serviceId = new ObjectId(req.body.serviceId);
+    }
+
     if (req.body.search && typeof req.body.search !== "undefined" && req.body.search !== '') {
       matchQuery.$or = [
         { targetName: { $regex: '.*' + req.body.search + '.*', $options: 'i' } }
@@ -42,6 +48,7 @@ exports.handler = async (req, res) => {
 };
 
 exports.rule = Joi.object({
+  serviceId: Joi.string().optional().description("Service Id"),
   pageNumber: Joi.number().optional().default(1).description("PageNumber"),
   pageSize: Joi.number().optional().default(20).description("PageNumber"),
   search: Joi.string().optional().allow('').description('search').example('john')
