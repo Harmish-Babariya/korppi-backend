@@ -30,5 +30,5 @@ exports.rule = Joi.object({
   location: Joi.array().items(Joi.string()).required().description("Location"),
   employeeCount: Joi.array().items(Joi.number()).required().description("Employee Count"),
   industry: Joi.array().items(Joi.string()).required().description("Industry"),
-  jobTitle: Joi.string().required().description("Job Title")
+  jobTitle: Joi.array().required().description("Job Title")
 });

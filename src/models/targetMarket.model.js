@@ -19,7 +19,7 @@ const targetMarket = mongoose.Schema({
 		type: Array
 	},
 	jobTitle: {
-		type: String
+		type: Array
 	}
 }, { timestamps: true });
 
