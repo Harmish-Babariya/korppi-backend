@@ -15,6 +15,7 @@ const makeMongoDbServiceCompany = require("../../../services/db/dbService")({
 
 exports.handler = async (req, res) => {
   try { 
+    let roles = req.body.role.map(role => role.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     let industryId = await makeMongoDbServiceIndustry.getSingleDocumentByQuery(
       { name: { $in: req.body.industry } },
       ["_id"]
@@ -37,7 +38,7 @@ exports.handler = async (req, res) => {
     const skip = pageNumber === 1 ? 0 : parseInt((pageNumber - 1) * pageSize);
     const matchQuery = {
       company: { $in: companies },
-      role: { $in: req.body.role.map(role => new RegExp(role, 'i')) },
+      role: { $in: roles.map(role => new RegExp(role, 'i')) },
     };
     if (
       req.body.search &&
