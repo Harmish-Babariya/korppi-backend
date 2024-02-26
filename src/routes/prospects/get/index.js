@@ -37,7 +37,7 @@ exports.handler = async (req, res) => {
     const skip = pageNumber === 1 ? 0 : parseInt((pageNumber - 1) * pageSize);
     const matchQuery = {
       company: { $in: companies },
-      role: { $regex: req.body.role, $options: "i" },
+      role: { $in: req.body.role.map(role => new RegExp(role, 'i')) },
     };
     if (
       req.body.search &&
@@ -102,5 +102,5 @@ exports.rule = Joi.object({
   employeeCount: Joi.array().required().description("employeeCount"),
   location: Joi.array().required().description("location"),
   industry: Joi.array().required().description("industry"),
-  role: Joi.string().required().description("role").example("CEO"),
+  role: Joi.array().required().description("role").example("CEO"),
 });
