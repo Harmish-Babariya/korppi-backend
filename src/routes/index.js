@@ -7,6 +7,7 @@ const marketRoutes = require("./targetMarket")
 const prospectsRoutes = require("./prospects")
 const emailRoutes = require("./email")
 const roleRoutes = require("./role")
+const locationRoutes = require("./location")
 
 module.exports = (app) => {
     app.get("/", (req, res) => {
@@ -26,6 +27,7 @@ module.exports = (app) => {
     app.use("/v1/prospects", prospectsRoutes)
     app.use("/v1/email", emailRoutes)
     app.use("/v1/roles", roleRoutes)
+    app.use("/v1/locations", locationRoutes)
 
     app.use((err, req, res, next) => {
         console.error(err); // Log the error for server-side debugging
