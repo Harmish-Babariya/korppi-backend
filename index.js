@@ -7,6 +7,7 @@ require("dotenv").config();
 require('./config/config')(app)
 require('./config/dbConfig')()
 require('./src/routes')(app)
+require('./config/cronJobs')()
 
 app.listen(3000,() => {
   console.log("server is running..");

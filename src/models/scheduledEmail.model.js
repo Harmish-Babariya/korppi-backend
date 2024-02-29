@@ -6,7 +6,8 @@ const scheduledEmailSchema = mongoose.Schema({
 		type: String
 	},
 	jobId: {
-		type: String
+		type: String,
+		default: ''
 	},
 	emailsGenerated: {
 		type: Number 
@@ -22,7 +23,27 @@ const scheduledEmailSchema = mongoose.Schema({
     service: {
         type: mongoose.Schema.Types.ObjectId,
 		ref: 'Service'
-    }
+    },
+	isDailySchedule: {
+		type: Boolean,
+		default: false
+	},
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	endTime: {
+		type: String,
+		default: ''
+	},
+	daysOfWeek: {
+		type: Object,
+		default: null
+	},
+	timezone: {
+		type: String,
+		default: ''
+	}
 }, { timestamps: true });
 
 exports.scheduledEmailSchema = scheduledEmailSchema;
