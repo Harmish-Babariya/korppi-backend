@@ -23,12 +23,13 @@ exports.handler = async (req, res) => {
     const generatedPassword = generatePwd(8, true, true, true);
     req.body.status = 1
     req.body.password = bcrypt.hashSync(generatedPassword, parseInt(process.env.SALT_ROUND))
-    req.body.emailConfig = {
+    req.body.emailConfig = [{
       email: req.body.email || '',
       password: req.body.emailPassword || '',
       smtpPort: req.body.smtpPort || '',
-      smtpServer: req.body.smtpServer || ''
-   }
+      smtpServer: req.body.smtpServer || '',
+      isActive: true
+   }]
     delete req.body.emailPassword
     delete req.body.smtpPort
     delete req.body.smtpServer

@@ -53,16 +53,17 @@ const userSchema = mongoose.Schema(
           type: String,
           default: "",
         },
-		isActive: {
-			type: Boolean,
-			default: false
-		}
+        isActive: {
+          type: Boolean,
+          default: false
+        }
       },
       default: {
         email: "",
         password: "",
         smtpPort: "",
         smtpServer: "",
+        isActive: false
       },
       _id: false,
     }]
