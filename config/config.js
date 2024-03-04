@@ -28,14 +28,14 @@ module.exports = function (app) {
         }
     }
 
-    app.get('/api/google',
+    app.get('/v1/google',
         passport.authenticate('google', {
             scope:
                 ['email', 'profile']
         }
         ));
 
-    app.get('/api/google/callback',
+    app.get('/v1/google/callback',
         passport.authenticate('google', {
             failureRedirect: '/failed',
         }),
