@@ -38,7 +38,7 @@ exports.handler = async (req, res) => {
       linkedinUrl: req.body.linkedinUrl ? req.body.linkedinUrl : undefined,
       status: req.body.status ? req.body.status : undefined,
       emailConfig: req.body.emailConfig && Object.keys(req.body.emailConfig).length > 0 ? req.body.emailConfig : undefined,
-      isShowPaywall: req.body.isShowPaywall ? req.body.isShowPaywall : undefined
+      isShowPaywall: typeof req.body.isShowPaywall != 'undefined' ? req.body.isShowPaywall : undefined
     }
 
     newData = JSON.parse(JSON.stringify(newData))
