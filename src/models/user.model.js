@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema(
     status: {
       type: Number, //1 - Active, 2 - Deactive, 3 - Deleted, 4 - warming
     },
+    isShowPaywall: {
+      type: Boolean,
+      default: false
+    },
     isAdmin: {
       type: Boolean,
       default: false,
