@@ -2,15 +2,23 @@ const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
 const { Emails } = require("../../../models/emails.model");
 const { Service } = require("../../../models/service.model");
+// const { Prospects } = require("../../../models/prospects.model");
 const { ObjectId } = require("mongodb");
+// const OpenAI = require('openai')
 const generateBody = require("../../../helpers/generateBody");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: Emails,
 });
+// const makeMongoDbServiceProspect = require("../../../services/db/dbService")({
+//   model: Prospects,
+// });
 const makeMongoDbServiceService = require("../../../services/db/dbService")({
   model: Service,
 });
 
+// const openai = new OpenAI({
+//   apiKey: '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'
+// })
 exports.handler = async (req, res) => {
   try {
   let serviceId = req.body.serviceId
@@ -48,6 +56,10 @@ exports.handler = async (req, res) => {
   if(req.body.emails) {
     req.body.emails.map(async ele => {
       let emailId = new ObjectId()
+      // let prospectData = await makeMongoDbServiceProspect.getSingleDocumentByIdPopulate(ele.prospectId, null, ['company'])
+      // console.log(prospectData)
+      // let recipientName = prospectData.firstName + ' ' + prospectData.lastName
+      // let recipientCompany = prospectData.company.name
       let body = generateBody(emailId, serviceName, companyName, title, price, offer, features, benefits, userName, role, email, website)
             const emailData = {
                 _id: emailId,
