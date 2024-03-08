@@ -42,6 +42,7 @@ exports.handler = async (req, res) => {
     }
 
     newData = JSON.parse(JSON.stringify(newData))
+    console.log(newData)
     const newUser = await makeMongoDbService.findOneAndUpdateDocument(
       { _id: req.body.id},
       newData,
