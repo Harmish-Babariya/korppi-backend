@@ -14,10 +14,11 @@ const makeMongoDbServiceScheduledEmail = require("../../../services/db/dbService
 exports.handler = async (req, res) => {
   try {
     let userId = req.user._id;
-    let host = req.user.emailConfig.smtpServer
-    let fromEmail = req.user.emailConfig.email
-    let pwd = req.user.emailConfig.password
-    let port = req.user.emailConfig.smtpPort
+    let emailConfig = req.user.emailConfig.filter(ele => ele.isActive == true)
+    let host = emailConfig[0].smtpServer
+    let fromEmail = emailConfig[0].email
+    let pwd = emailConfig[0].password
+    let port = emailConfig[0].smtpPort
     if (!req.body.isScheduled) {
       let prospectsData = await makeMongoDbService.getDocumentByQueryPopulate(
         {
