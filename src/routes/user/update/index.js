@@ -37,7 +37,8 @@ exports.handler = async (req, res) => {
       companyId: req.body.companyId ? req.body.companyId : undefined,
       linkedinUrl: req.body.linkedinUrl ? req.body.linkedinUrl : undefined,
       status: req.body.status ? req.body.status : undefined,
-      emailConfig: req.body.emailConfig && Object.keys(req.body.emailConfig).length > 0 ? req.body.emailConfig : undefined
+      emailConfig: req.body.emailConfig && Object.keys(req.body.emailConfig).length > 0 ? req.body.emailConfig : undefined,
+      isShowPaywall: req.body.isShowPaywall ? req.body.isShowPaywall : undefined
     }
 
     newData = JSON.parse(JSON.stringify(newData))
@@ -65,6 +66,7 @@ exports.rule = Joi.object({
   password: Joi.string().optional().description("password"),
   companyId: Joi.string().min(24).max(24).optional().description("companyId"),
   linkedinUrl: Joi.string().optional().description("linkedinUrl"),
+  isShowPaywall: Joi.boolean().optional().description("isShowPaywall"),
   status: Joi.number().valid(1,2,3,4).optional().description("status"),
   emailConfig: Joi.object().optional()
 });
