@@ -76,5 +76,5 @@ exports.handler = async (req, res) => {
 exports.rule = Joi.object({
   isScheduled: Joi.boolean().required().description("isScheduled"),
   scheduledTime: Joi.string().isoDate().optional().when('isScheduled', { is: true, then: Joi.required()}).description("scheduledTime"),
-  emailCount: Joi.number().required().description("emailCount")
+  emailCount: Joi.number().optional().description("emailCount")
 });
