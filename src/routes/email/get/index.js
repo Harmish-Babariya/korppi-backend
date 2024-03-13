@@ -14,6 +14,8 @@ exports.handler = async (req, res) => {
     const pageSize = parseInt(req.body.pageSize);
     const skip = pageNumber === 1 ? 0 : parseInt((pageNumber - 1) * pageSize);
     const matchQuery = { userId: req.user._id };
+    let selectArr = ["prospectId", "companyId", "isSent", "sentAt", "isOpen", "counts", "openAt"]
+    let populateArr = ["prospectId", "companyId"]
     if (req.body.emailId && req.body.emailId != '') {
       matchQuery['_id'] = new ObjectId(req.body.emailId)
     } 
@@ -22,10 +24,15 @@ exports.handler = async (req, res) => {
     //     { name: { $regex: '.*' + req.body.search + '.*', $options: 'i' } }
     //   ];
     // }
+
+    if (req.body.emailId) {
+      selectArr = ["subject", "body"]
+      populateArr = []
+    }
     emailList = await makeMongoDbService.getDocumentByQueryPopulate(
         matchQuery,
-        ["prospectId", "companyId", "isSent", "sentAt", "isOpen", "counts", "openAt"],
-        ["prospectId", "companyId",],
+        selectArr,
+        populateArr,
         pageNumber,
         pageSize,
         { _id: -1 }
