@@ -19,13 +19,16 @@ exports.handler = async (req, res) => {
     let fromEmail = emailConfig[0].email
     let pwd = emailConfig[0].password
     let port = emailConfig[0].smtpPort
+    let pageSize = parseInt(req.body.emailCount)
     if (!req.body.isScheduled) {
       let prospectsData = await makeMongoDbService.getDocumentByQueryPopulate(
         {
           userId: userId, isSent: false, isScheduled: false
         },
         ["prospectId", 'subject', 'body'],
-        ["prospectId"]
+        ["prospectId"],
+        1,
+        pageSize
       );
 
       if(prospectsData) {
@@ -46,7 +49,9 @@ exports.handler = async (req, res) => {
           userId: userId, isSent: false, isScheduled: true
         },
         ["prospectId", 'subject', 'body'],
-        ["prospectId"]
+        ["prospectId"],
+        1,
+        pageSize
         );
 
         let scheduleData = {
@@ -70,5 +75,6 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   isScheduled: Joi.boolean().required().description("isScheduled"),
-  scheduledTime: Joi.string().isoDate().optional().when('isScheduled', { is: true, then: Joi.required()}).description("scheduledTime")
+  scheduledTime: Joi.string().isoDate().optional().when('isScheduled', { is: true, then: Joi.required()}).description("scheduledTime"),
+  emailCount: Joi.number().required().description("emailCount")
 });
