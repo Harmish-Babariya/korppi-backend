@@ -2,9 +2,15 @@ const { sendResponse, messages } = require("../../../helpers/handleResponse");
 const Joi = require("joi");
 const { ObjectId } = require("mongodb");
 const { ScheduledEmail } = require("../../../models/scheduledEmail.model");
+const { Service } = require("../../../models/service.model");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: ScheduledEmail,
 });
+const makeMongoDbServiceService = require("../../../services/db/dbService")({
+  model: Service,
+});
+
+
 
 exports.handler = async (req, res) => {
   try {
@@ -16,25 +22,73 @@ exports.handler = async (req, res) => {
     const matchQuery = { user: req.user._id };
 
     emailList = await makeMongoDbService.getDocumentByQuery(
-        matchQuery,
-        ['isDailySchedule', 'emailsGenerated', 'isActive', 'createdAt', 'scheduledTime', 'endTime', 'daysOfWeek', 'service'],
-        pageNumber,
-        pageSize,
-        { _id: -1 }
-      );
+      matchQuery,
+      [
+        "isDailySchedule",
+        "emailsGenerated",
+        "isActive",
+        "createdAt",
+        "scheduledTime",
+        "endTime",
+        "daysOfWeek",
+        "service",
+        "createdAt",
+      ],
+      pageNumber,
+      pageSize,
+      { _id: -1 }
+    );
 
-  const emailCount = await makeMongoDbService.getCountDocumentByQuery(matchQuery);
-  meta = {
-    pageNumber,
-    pageSize,
-    totalCount: emailCount,
-    prevPage: parseInt(pageNumber) === 1 ? false : true,
-    nextPage: parseInt(emailCount) / parseInt(pageSize) <= parseInt(pageNumber) ? false : true,
-    totalPages: Math.ceil(parseInt(emailCount) / parseInt(pageSize)),
-  };
-    return sendResponse(res,null,200,messages.successResponse(emailList, meta));
+    let service = emailList[0].service
+
+    let { title } = await makeMongoDbServiceService.getDocumentById(service, ['title'])
+    const dayLabels = ["S", "M", "T", "W", "T", "F", "S"];
+
+    let data = emailList.map((item) => {
+      const { endTime, daysOfWeek, createdAt, isDailySchedule } = item;
+      if (isDailySchedule) {
+        const endDateTime = new Date(endTime);
+        const createdDateTime = new Date(createdAt);
+        let totalEmails = 0;
+
+        while (createdDateTime < endDateTime) {
+          const dayOfWeek = createdDateTime.getDay().toString();
+          if (daysOfWeek[dayOfWeek]) {
+            totalEmails++;
+          }
+          createdDateTime.setDate(createdDateTime.getDate() + 1);
+        }
+
+        let label = title + '(';
+
+        for (let i = 0; i < dayLabels.length; i++) {
+          if (daysOfWeek[i.toString()]) {
+            label += dayLabels[i];
+          }
+        }
+        label += ')'
+        item.totalEmails = totalEmails;
+        return { ...item._doc, totalEmails, label };
+      }
+      return { ...item._doc, totalEmails : 0, label: '' };
+    });
+
+    const emailCount = await makeMongoDbService.getCountDocumentByQuery(
+      matchQuery
+    );
+    meta = {
+      pageNumber,
+      pageSize,
+      totalCount: emailCount,
+      prevPage: parseInt(pageNumber) === 1 ? false : true,
+      nextPage:
+        parseInt(emailCount) / parseInt(pageSize) <= parseInt(pageNumber)
+          ? false
+          : true,
+      totalPages: Math.ceil(parseInt(emailCount) / parseInt(pageSize)),
+    };
+    return sendResponse(res, null, 200, messages.successResponse(data, meta));
   } catch (error) {
-    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
