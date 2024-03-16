@@ -59,18 +59,18 @@ exports.handler = async (req, res) => {
           createdDateTime.setDate(createdDateTime.getDate() + 1);
         }
 
-        let label = title + '(';
+        let label = '';
 
         for (let i = 0; i < dayLabels.length; i++) {
           if (daysOfWeek[i.toString()]) {
             label += dayLabels[i];
           }
         }
-        label += ')'
+        label += title
         item.totalEmails = totalEmails;
         return { ...item._doc, totalEmails, label };
       }
-      return { ...item._doc, totalEmails : 0, label: '' };
+      return { ...item._doc, totalEmails : 0, label: title };
     });
 
     const emailCount = await makeMongoDbService.getCountDocumentByQuery(
