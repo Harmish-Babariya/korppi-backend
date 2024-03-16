@@ -6,6 +6,8 @@ const get = require("./get");
 const getScheduledEmail = require("./getScheduledEmail");
 const getCountByUser = require("./getCountByUser");
 const dailyschedule = require("./dailySchedule");
+const deleteScheduleEmail = require("./deleteScheduleEmail");
+const updateSchedule = require("./updateSchedule");
 const open = require("./open");
 const validator = require('../../helpers/validator');
 const { authenticateToken } = require("../../middleware/auth.middleware");
@@ -16,6 +18,9 @@ router.post("/get", authenticateToken, validator("body", get.rule), get.handler)
 router.post("/getScheduleEmails", authenticateToken, validator("body", getScheduledEmail.rule), getScheduledEmail.handler);
 router.post("/getCount", authenticateToken, getCountByUser.handler);
 router.post("/dailyschedule", authenticateToken, validator("body", dailyschedule.rule), dailyschedule.handler);
+router.post("/dailyschedule/delete", authenticateToken, validator("body", dailyschedule.rule), dailyschedule.handler);
+router.post("/schedule/delete", authenticateToken, validator("body", deleteScheduleEmail.rule), deleteScheduleEmail.handler);
+router.post("/schedule/update", authenticateToken, validator("body", updateSchedule.rule), updateSchedule.handler);
 router.post("/stop", authenticateToken, validator("body", dailyschedule.stopRule), dailyschedule.stopHandler);
 router.get("/open/:id", open.handler);
 
