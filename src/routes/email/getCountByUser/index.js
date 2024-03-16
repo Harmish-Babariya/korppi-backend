@@ -13,7 +13,7 @@ exports.handler = async (req, res) => {
     const emailCount = await makeMongoDbService.getCountDocumentByQuery(
       matchQuery
     );
-    return sendResponse(res, null, 200, messages.successResponse({ emailCount, service: service ? service.service : null }));
+    return sendResponse(res, null, 200, messages.successResponse({ emailCount, service: service ? service.service : '' }));
   } catch (error) {
     return sendResponse(res, null, 500, messages.failureResponse());
   }
