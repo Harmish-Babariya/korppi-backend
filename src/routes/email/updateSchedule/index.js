@@ -32,5 +32,5 @@ exports.handler = async (req, res) => {
 
 exports.rule = Joi.object({
   id: Joi.string().required().description("id"),
-  scheduledTime: Joi.string().isoDate().required().description("scheduledTime"),
+  scheduledTime: Joi.string().required().description("scheduledTime")
 });
