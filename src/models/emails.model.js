@@ -77,6 +77,11 @@ const emails = mongoose.Schema({
 	counts: {
 		type: Number,
 		default: 0
+	},
+	service: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Service',
+		default: null
 	}
 }, { timestamps: true });
 

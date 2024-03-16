@@ -17,7 +17,7 @@ exports.handler = async (req, res) => {
 
     emailList = await makeMongoDbService.getDocumentByQuery(
         matchQuery,
-        ['isDailySchedule', 'emailsGenerated', 'isActive', 'createdAt', 'scheduledTime', 'endTime'],
+        ['isDailySchedule', 'emailsGenerated', 'isActive', 'createdAt', 'scheduledTime', 'endTime', 'daysOfWeek', 'service'],
         pageNumber,
         pageSize,
         { _id: -1 }
