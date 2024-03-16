@@ -69,5 +69,5 @@ exports.rule = Joi.object({
   linkedinUrl: Joi.string().optional().description("linkedinUrl"),
   isShowPaywall: Joi.boolean().optional().description("isShowPaywall"),
   status: Joi.number().valid(1,2,3,4).optional().description("status"),
-  emailConfig: Joi.object().optional()
+  emailConfig: Joi.array().optional()
 });
