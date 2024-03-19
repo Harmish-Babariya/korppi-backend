@@ -14,6 +14,7 @@ router.post("/update", validator('body',update.rule), update.handler)
 router.post("/delete", validator('body',deleteUser.rule), deleteUser.handler)
 router.post("/get", validator('body',get.rule), get.handler)
 router.post("/add/google", validator('body',google.rule), google.handler)
+router.post("/add/microsoft", validator('body',google.rule), google.handler)
 router.post("/getById", authenticateToken, validator('body',getById.rule), getById.handler)
 
 module.exports = router
