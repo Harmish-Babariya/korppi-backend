@@ -36,7 +36,8 @@ async function processEmailCreation(
   emailId,
   ele,
   req,
-  serviceId
+  serviceId,
+  targetMarketId
 ) {
   try {
     const chatCompletion = await openai.chat.completions.create({
@@ -64,6 +65,7 @@ async function processEmailCreation(
       body: chatCompletion["choices"][0]["message"]["content"],
       subject: serviceName + " offer from " + companyName,
       service: serviceId,
+      targetMarket: targetMarketId
     };
 
     await makeMongoDbService.createDocument(emailData);
@@ -80,6 +82,7 @@ async function processEmailCreation(
 exports.handler = async (req, res) => {
   try {
     let serviceId = req.body.serviceId;
+    let targetMarketId = req.body.targetMarketId;
     let service = await makeMongoDbServiceService.getDocumentByQueryPopulate(
       {
         _id: serviceId,
@@ -174,7 +177,8 @@ exports.handler = async (req, res) => {
           emailId,
           ele,
           req,
-          serviceId
+          serviceId,
+          targetMarketId
         ).then(() => {
           return sendResponse(res, null, 200, messages.successResponse());
         }).catch(() => {
@@ -205,6 +209,7 @@ exports.rule = Joi.object({
     })
     .required(),
   serviceId: Joi.string().min(24).max(24).required().description("serviceId"),
+  targetMarketId: Joi.string().min(24).max(24).required().description("targetMarketId"),
   userId: Joi.string().min(24).max(24).required().description("userId"),
   sentBy: Joi.string().required().description("sentBy"),
 });

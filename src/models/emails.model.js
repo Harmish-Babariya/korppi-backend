@@ -82,6 +82,11 @@ const emails = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Service',
 		default: null
+	},
+	targetMarket: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'TargetMarket',
+		default: null
 	}
 }, { timestamps: true });
 
