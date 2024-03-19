@@ -3,6 +3,7 @@ const Joi = require("joi");
 const { ObjectId } = require("mongodb");
 const { ScheduledEmail } = require("../../../models/scheduledEmail.model");
 const { Service } = require("../../../models/service.model");
+const { json } = require("body-parser");
 const makeMongoDbService = require("../../../services/db/dbService")({
   model: ScheduledEmail,
 });
@@ -40,8 +41,15 @@ exports.handler = async (req, res) => {
     );
 
     let service = emailList[0].service
-
-    let { title } = await makeMongoDbServiceService.getDocumentById(service, ['title'])
+    let serviceTitles = {};
+    for (const email of emailList) {
+      if (email.service && !serviceTitles[email.service]) {
+        let serviceDoc = await makeMongoDbServiceService.getDocumentById(email.service, ['title']);
+        serviceTitles[email.service] = serviceDoc ? serviceDoc.title : 'No Service Title'; // Use 'No Service Title' or any placeholder
+      }
+    }
+    let  title = await makeMongoDbServiceService.getDocumentById(service, ['title'])
+    console.log(serviceTitles)
     const dayLabels = ["S", "M", "T", "W", "T", "F", "S"];
 
     let data = emailList.map((item) => {
@@ -66,7 +74,7 @@ exports.handler = async (req, res) => {
             label += dayLabels[i];
           }
         }
-        label += title
+        label += ' ' + Object.values(serviceTitles)[0];
         item.totalEmails = totalEmails;
         return { ...item._doc, totalEmails, label };
       }
@@ -89,6 +97,7 @@ exports.handler = async (req, res) => {
     };
     return sendResponse(res, null, 200, messages.successResponse(data, meta));
   } catch (error) {
+    console.log(error)
     return sendResponse(res, null, 500, messages.failureResponse());
   }
 };
