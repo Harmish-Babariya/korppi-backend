@@ -149,6 +149,8 @@ exports.rule = Joi.object({
   time: Joi.string().required().description("time in cron format HH:mm"),
   endDate: Joi.date().iso().description("end date"),
   timezone: Joi.string().required().description("end date"),
+  service: Joi.string().required(),
+  targetMarket: Joi.string().required()
 });
 
 exports.stopRule = Joi.object({
