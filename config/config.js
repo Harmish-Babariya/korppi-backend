@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const passport = require('passport');
+const OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 require('../src/services/passport');
@@ -18,7 +19,21 @@ module.exports = function (app) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-
+    passport.use(new OIDCStrategy({
+        identityMetadata: process.env.MICROSOFT_IDENTITY_METADATA,
+        clientID: process.env.MICROSOFT_CLIENT_ID,
+        responseType: 'code',
+        responseMode: 'form_post',
+        redirectUrl: process.env.MICROSOFT_CALL_BACK_URL,
+        clientSecret: process.env.MICROSOFT_CLIENT_SECRET,
+        validateIssuer: false,
+        passReqToCallback: false,
+        scope: ['openid', 'profile', 'offline_access']
+    },
+    (iss, sub, profile, accessToken, refreshToken, done) => {
+        return done(null, profile);
+    }
+));
     // Middleware used in protected routes to check if the user has been authenticated
     const isLoggedIn = (req, res, next) => {
         if (req.user) {
@@ -27,6 +42,19 @@ module.exports = function (app) {
             res.sendStatus(401);
         }
     }
+    app.get('/microsoft', passport.authenticate('azuread-openidconnect'));
+    app.post('/auth/microsoft/callback',
+    passport.authenticate('azuread-openidconnect', { failureRedirect: '/microsoft' }),
+    (req, res) => { 
+        console.log(res)
+        res.redirect('/');
+    });
+
+    app.get('/microsoft/logout', (req, res) => {
+        req.logout();
+        res.redirect('/');
+    });
+
 
     app.get('/google',
         passport.authenticate('google', {
