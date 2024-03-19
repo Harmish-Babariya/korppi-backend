@@ -59,7 +59,7 @@ exports.handler = async (req, res) => {
           scheduledTime: new Date(req.body.scheduledTime).toISOString(),
           emailsGenerated: parseInt(prospectsData.length),
           user: req.user._id,
-          targetMarket: null,
+          targetMarket: req.body.targetMarket,
           service: req.body.service,
           isActive: true,
           isDailySchedule: false
@@ -77,5 +77,6 @@ exports.rule = Joi.object({
   isScheduled: Joi.boolean().required().description("isScheduled"),
   scheduledTime: Joi.string().isoDate().optional().when('isScheduled', { is: true, then: Joi.required()}).description("scheduledTime"),
   emailCount: Joi.number().required().description("emailCount"),
-  service: Joi.string().optional().when('isScheduled', { is: true, then: Joi.required()}).description("service")
+  service: Joi.string().optional().when('isScheduled', { is: true, then: Joi.required()}).description("service"),
+  targetMarket: Joi.string().optional().when('isScheduled', { is: true, then: Joi.required()}).description("service")
 });

@@ -9,11 +9,11 @@ const makeMongoDbService = require("../../../services/db/dbService")({
 exports.handler = async (req, res) => {
   try {
     const matchQuery = { userId: req.user._id, isSent: false };
-    const service = await makeMongoDbService.getSingleDocumentByQuery(matchQuery, ['service'])
+    const data = await makeMongoDbService.getSingleDocumentByQuery(matchQuery, ['service', 'targetMarket'])
     const emailCount = await makeMongoDbService.getCountDocumentByQuery(
       matchQuery
     );
-    return sendResponse(res, null, 200, messages.successResponse({ emailCount, service: service ? service.service : '' }));
+    return sendResponse(res, null, 200, messages.successResponse({ emailCount, service: data ? data.service : '', targetMarket: data ? data.targetMarket : '' }));
   } catch (error) {
     return sendResponse(res, null, 500, messages.failureResponse());
   }
