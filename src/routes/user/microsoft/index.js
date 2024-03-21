@@ -8,7 +8,7 @@ exports.handler = async (req, res) => {
   try {
     const data = {
       email: req.body.email,
-      password: req.body.appPassword,
+      password: "",
       smtpServer: "smtp.office365.com",
       smtpPort: "587",
       isActive: false,
@@ -38,5 +38,5 @@ exports.handler = async (req, res) => {
 exports.rule = Joi.object({
   userId: Joi.string().min(24).max(24).required(),
   email: Joi.string().required().description("email"),
-  appPassword: Joi.string().required(),
+  // appPassword: Joi.string().required(),
 });
