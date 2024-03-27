@@ -3,6 +3,7 @@ const router = express.Router();
 const generate = require("./generate");
 const send = require("./send");
 const get = require("./get");
+const update = require("./update");
 const getScheduledEmail = require("./getScheduledEmail");
 const getCountByUser = require("./getCountByUser");
 const dailyschedule = require("./dailySchedule");
@@ -23,5 +24,6 @@ router.post("/schedule/delete", authenticateToken, validator("body", deleteSched
 router.post("/schedule/update", authenticateToken, validator("body", updateSchedule.rule), updateSchedule.handler);
 router.post("/stop", authenticateToken, validator("body", dailyschedule.stopRule), dailyschedule.stopHandler);
 router.get("/open/:id", open.handler);
+router.post("/update", authenticateToken, validator("body", update.rule), update.handler);
 
 module.exports = router
