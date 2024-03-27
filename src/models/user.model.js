@@ -57,6 +57,14 @@ const userSchema = mongoose.Schema(
           type: String,
           default: "",
         },
+        imapServer: {
+          type: String,
+          default: "",
+        },
+        imapPort: {
+          type: String,
+          default: "",
+        },
         isActive: {
           type: Boolean,
           default: false
@@ -67,6 +75,8 @@ const userSchema = mongoose.Schema(
         password: "",
         smtpPort: "",
         smtpServer: "",
+        imapPort: "",
+        imapServer: "",
         isActive: false
       },
       _id: false,
